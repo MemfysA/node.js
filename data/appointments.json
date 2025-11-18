@@ -1,2 +1,27 @@
 [
+  {
+    "doctorId": 1,
+    "patientId": 1,
+    "time": "2025-11-01T10:00:00"
+  },
+  {
+    "doctorId": 1,
+    "patientId": 1,
+    "time": "2025-11-01T11:00:00"
+  },
+  {
+    "doctorId": 1,
+    "patientId": 1,
+    "time": "2025-11-01T12:00:00"
+  },
+  {
+    "doctorId": 2,
+    "patientId": 1,
+    "time": "2025-11-01T12:00:00"
+  },
+  {
+    "doctorId": 1,
+    "patientId": 1,
+    "time": "2025-11-01T13:00:00"
+  }
 ]
