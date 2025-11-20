@@ -34,6 +34,7 @@ function loadAppointments() {
 }
 
 
+//получить обьяснения 
 router.get('/', (req, res) => {
     const doctors = loadDoctors();
     const appointments = loadAppointments();

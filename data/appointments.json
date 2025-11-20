@@ -23,5 +23,10 @@
     "doctorId": 1,
     "patientId": 1,
     "time": "2025-11-01T13:00:00"
+  },
+  {
+    "doctorId": 1,
+    "patientId": 1,
+    "time": "2025-11-01T14:00:00"
   }
 ]

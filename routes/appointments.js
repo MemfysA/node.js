@@ -6,6 +6,9 @@ const fs = require('fs');
 
 const router = express.Router();
 
+// Это функция которая загружает записи из JSON файла
+// loadAppointments() — загружает записи из JSON 
+// JSON.parse(data) — превращает JSON-строку в объект/массив
 function loadAppointments() {
     try {
         const filePath = path.join(__dirname, '..', 'data', 'appointments.json');
@@ -15,6 +18,7 @@ function loadAppointments() {
         return [];
     }
 }
+
 
 function saveAppointments(appointments) {
     const filePath = path.join(__dirname, '..', 'data', 'appointments.json');
@@ -41,8 +45,11 @@ function loadPatients() {
     }
 }
 
+// функция удаления записи
+
+
 router.get('/book', (req, res) => {
-    res.status(201).json({message: 'Запись на прием создана'});
+    res.status(201).json({ message: 'Запись на прием создана' });
 });
 
 router.get('/', (req, res) => {
@@ -87,11 +94,11 @@ router.post('/book', (req, res) => {
     const doctors = loadDoctors();
     const patients = loadPatients();
     const doctor = doctors.find(d => d.id === doctorId);
-    
+
     if (!doctor) {
         return res.status(404).json({ error: 'Доктор не найден' });
     }
-    
+
     if (!doctor.slots.includes(time)) {
         return res.status(400).json({ error: 'Нерабочее время' });
     }
@@ -102,7 +109,7 @@ router.post('/book', (req, res) => {
     if (isTaken) {
         return res.status(400).json({ error: 'На это время есть запись' });
     }
-    
+
     const patient = patients.find(p => p.id === patientId);
     if (!patient) {
         return res.status(404).json({ error: 'Такого пациента нет' });
@@ -134,23 +141,18 @@ router.put('/', (req, res) => {
 });
 
 
-router.delete('/', (req, res) => {
-    const id = parseInt(req.params.id);
-    const doctors = loadDoctors();
-    const doctorIndex = doctors.findIndex(d => d.id === id);
+router.delete('/:index', (req, res) => {
+    const index = parseInt(req.params.index);
+    const appointments = loadAppointments();
 
-    if (doctorIndex === -1) {
-        return res.status(404).json({ message: 'Доктор не найден' });
+    if (index < 0 || index >= appointments.length) {
+        return res.status(404).json({ error: 'Запись не найдена' });
     }
 
-    const deletedDoctor = doctors.splice(doctorIndex, 1)[0];
-    saveDoctors(doctors);
+    const deletedAppointment = appointments.splice(index, 1)[0];
+    saveAppointments(appointments);
 
-    res.json({ message: 'Доктор удален', doctor: deletedDoctor });
+    res.json({ message: 'Запись удалена', appointment: deletedAppointment });
 });
-
-
-
-
 
 module.exports = router;
